@@ -1,6 +1,16 @@
 # Meilisearch-Demo
 A demo example of using melisearch in PHP for searching uploaded documents.
 
+When deployed, this will show you a form for uploading documents and a form for searching. When you upload documents, the site makes sure to take the hash of the document to prevent uploading the exact same document twice. The tool will try and convert the document to a string format that can be searched, and gets passed to Meilisearch. 
+
+When you enter a search into the search form, it performs a Meilisearch and returns the JSON response.
+
+It would be good to:
+* Add drag and drop for mass uploading lots of files.
+* Add metadata fields to upload form (title, description, tags).
+* Ability to edit uploaded document metadata.
+* Pretty view of search results with ability to download the documents.
+
 ## Build
 1. Navigate to the `app/` folder.
 1. Run `composer install`
