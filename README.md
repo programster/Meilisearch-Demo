@@ -5,7 +5,7 @@ When deployed, this will show you a form for uploading documents and a form for 
 
 When you enter a search into the search form, it performs a Meilisearch and returns the JSON response.
 
-It would be good to:
+### Roadmap
 * Add drag and drop for mass uploading lots of files.
 * Add metadata fields to upload form (title, description, tags).
 * Ability to edit uploaded document metadata.
