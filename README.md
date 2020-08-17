@@ -6,6 +6,7 @@ When deployed, this will show you a form for uploading documents and a form for 
 When you enter a search into the search form, it performs a Meilisearch and returns the JSON response.
 
 ### Roadmap
+* [Add rankings to indexes](https://docs.meilisearch.com/references/ranking_rules.html#get-ranking-rules)
 * Add drag and drop for mass uploading lots of files.
 * Add metadata fields to upload form (title, description, tags).
 * Ability to edit uploaded document metadata.
