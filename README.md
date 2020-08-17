@@ -12,6 +12,7 @@ When you enter a search into the search form, it performs a Meilisearch and retu
 * Pretty view of search results with ability to download the documents.
 
 ## Build
+1. Create your own `.env` file from the example.
 1. Navigate to the `app/` folder.
 1. Run `composer install`
 1. Navigate back to the top level directory.
