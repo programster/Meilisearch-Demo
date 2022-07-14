@@ -46,8 +46,12 @@ services:
       - "7700:7700"
     volumes:
       - meilidata:/data.ms
-    env_file:
-      - ./../.env
+    environment:
+      - MEILI_ENV=production
+      - MEILI_NO_ANALYTICS=1
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+      - MEILI_LOG_LEVEL=INFO
+      - MEILI_DB_PATH=/data.ms
 
 
 volumes:
