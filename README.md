@@ -1,4 +1,6 @@
-# Meilisearch Demo
+Meilisearch Demo
+================
+
 A demo example of using [MeiliSearch](https://github.com/meilisearch/MeiliSearch) in PHP for 
 searching uploaded documents.
 
