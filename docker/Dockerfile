@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 
 VOLUME /storage
@@ -9,14 +9,16 @@ ENV TZ=Europe/London
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
-# Update packages.
-RUN apt-get update && apt-get dist-upgrade -y
+# Update and install ondrej PPA for PHP 8.2
+RUN apt-get update && apt-get dist-upgrade -y \
+    && apt-get install -y software-properties-common apt-transport-https \
+    && add-apt-repository ppa:ondrej/php -y
 
 
 # Install the relevant packages
 RUN apt-get install -y \
-    vim apache2 curl libapache2-mod-php7.4 composer \
-    php7.4-cli php7.4-bcmath php7.4-gmp php7.4-uuid php7.4-mbstring php7.4-xml php7.4-mysql php7.4-zip php7.4-curl
+    vim apache2 curl libapache2-mod-php8.2 composer \
+    php8.2-cli php8.2-bcmath php8.2-gmp php8.2-uuid php8.2-mbstring php8.2-xml php8.2-mysql php8.2-zip php8.2-curl
 
 
 # Install the cron service to tie up the container's foreground process
@@ -24,7 +26,7 @@ RUN apt-get install cron -y
 
 
 # Enable the php mod we just installed
-RUN a2enmod php7.4
+RUN a2enmod php8.2
 RUN a2enmod rewrite
 
 
@@ -43,9 +45,9 @@ ENV APACHE_PID_FILE /var/run/apache2/apache2.pid
 
 
 # Turn on display errors. We will disable them based on environment
-RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/7.4/apache2/php.ini
-RUN sed -i 's;post_max_size = .*;post_max_size = 1G;' /etc/php/7.4/apache2/php.ini
-RUN sed -i 's;upload_max_filesize = .*;upload_max_filesize = 1G;' /etc/php/7.4/apache2/php.ini
+RUN sed -i 's;display_errors = .*;display_errors = On;' /etc/php/8.2/apache2/php.ini
+RUN sed -i 's;post_max_size = .*;post_max_size = 1G;' /etc/php/8.2/apache2/php.ini
+RUN sed -i 's;upload_max_filesize = .*;upload_max_filesize = 1G;' /etc/php/8.2/apache2/php.ini
 
 
 # Add the startup script to the container
