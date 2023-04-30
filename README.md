@@ -25,5 +25,5 @@ When you enter a search into the search form, it performs a Meilisearch and retu
 1. Navigate to the `app/` folder.
 1. Run `composer install`
 1. Navigate back to the top level directory.
-1. Run `docker-compose -f docker/docker-compose.yml build`
-1. Run `docker-compose -f docker/docker-compose.yml up`
+1. Run `docker-compose build`
+1. Run `docker-compose up`
