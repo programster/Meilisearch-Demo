@@ -1,2 +1,5 @@
 .env
 vendor
+
+# Ignore PhpStorm IDE files.
+.idea
