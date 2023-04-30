@@ -16,6 +16,9 @@ class Init implements iRAP\Migrations\MigrationInterface
         )";
 
         SiteSpecific::getDb()->query($createTableQuery) or die("Failed to create documents table.");
+
+        $client = SiteSpecific::getMeiliClient();
+        $index = $client->createIndex(DOCUMENT_INDEX); // If your index does not exist
     }
 
 

@@ -9,22 +9,28 @@ networks:
 services:
   app:
     build:
-      context: ./..
+      context: .
       dockerfile: ./docker/Dockerfile
     image: ${COMPOSE_PROJECT_NAME}
     restart: always
+    networks:
+      - backend
+    depends_on:
+      - db
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - documents:/documents
-      - ./../app:/var/www/my-site
-    depends_on:
-        - db
-    networks:
-      - backend
-    env_file:
-      - ./../.env
+      - ./app:/var/www/my-site
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MEILIKEY=${MEILI_MASTER_KEY}
 
   db:
     image: mariadb:10.5
@@ -33,11 +39,14 @@ services:
       - backend
     volumes:
         - database:/var/lib/mysql
-    env_file:
-        - ./../.env
+    environment:
+      - MARIADB_DATABASE=${MYSQL_DATABASE}
+      - MARIADB_USER=${MYSQL_USER}
+      - MARIADB_PASSWORD=${MYSQL_PASSWORD}
+      - MARIADB_RANDOM_ROOT_PASSWORD=1
 
   meilisearch:
-    image: getmeili/meilisearch
+    image: getmeili/meilisearch:v1.1.1
     restart: always
     networks:
       backend:
@@ -49,10 +58,10 @@ services:
       - meilidata:/data.ms
     environment:
       - MEILI_ENV=production
-      - MEILI_NO_ANALYTICS=1
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
       - MEILI_LOG_LEVEL=INFO
       - MEILI_DB_PATH=/data.ms
+      - MEILI_NO_ANALYTICS=true
 
 
 volumes:

@@ -16,5 +16,5 @@ abstract class AbstractSlimController
 
     // this one is optional - refer to Slim3 - Simplifying Routing At Scale
     // https://blog.programster.org/slim3-simplifying-routing-at-scale
-    abstract public function registerRoutes($app);
+    abstract public static function registerRoutes($app);
 }

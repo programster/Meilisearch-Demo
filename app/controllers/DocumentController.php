@@ -8,7 +8,7 @@
 
 class DocumentController extends AbstractSlimController
 {
-    public function registerRoutes($app)
+    public static function registerRoutes($app)
     {
         $app->get('/', function (Psr\Http\Message\ServerRequestInterface $request, Psr\Http\Message\ResponseInterface $response, $args) {
             $controller = new DocumentController($request, $response, $args);
@@ -60,7 +60,6 @@ class DocumentController extends AbstractSlimController
                     Document::createNew($originalFilename, $newDestination, $newDocumentUuid);
                     $document = new OfficeDocument($newDestination, $extension);
                     $client = SiteSpecific::getMeiliClient();
-                    //$index = $client->createIndex(DOCUMENT_INDEX); // If your index does not exist
                     $index = $client->getIndex(DOCUMENT_INDEX);    // If you already created your index
 
                     $documents = [
@@ -92,12 +91,12 @@ class DocumentController extends AbstractSlimController
         $index = $client->getIndex(DOCUMENT_INDEX);
 
         $responseData = $index->search($search);
-        $bodyJson = json_encode($responseData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        $bodyJson = json_encode($responseData->getHits(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 
         $body = $this->m_response->getBody();
         $body->write($bodyJson);
 
-        $newResponse = $this->m_response->withStatus(200)->withHeader("Content-Type", "application/json");
+        $newResponse = $this->m_response->withStatus(200)->withHeader("Content-Type", "application/json")->withBody($body);
         return $newResponse;
     }
 }

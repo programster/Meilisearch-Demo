@@ -22,7 +22,7 @@ class SiteSpecific
 
     public static function getMeiliClient() : \MeiliSearch\Client
     {
-        $client = new \MeiliSearch\Client("meilisearch:7700", $_ENV['MEILIKEY']);
+        $client = new \MeiliSearch\Client("meilisearch:7700", getenv('MEILIKEY'));
         return $client;
     }
 
